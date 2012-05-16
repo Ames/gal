@@ -56,6 +56,8 @@ function doScrape(dir,cb){
           console.log("pleh",preSplit[i])
           if(i<1){
               for(var t in preSplit[i]){
+                  console.log("----:",preSplit[i].split('<')[t].split('>')[-1])
+                     
                   console.log("~~~~:",preSplit[i].split('<')[t])
               }
               continue;
