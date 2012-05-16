@@ -55,13 +55,8 @@ function doScrape(dir,cb){
         for(var i in preSplit){
           console.log("pleh",preSplit[i])
           if(i<1){
-              var hSplit = preSplit[i].split('<');
-              for(var t in preSplit[i]){
-                  if (hSplit[t] != []){
-                  console.log("----:",hSplit[t].split('>')[hSplit[t].length - 1])
-                  }
-                  console.log("~~~~:",hSplit[t])
-              }
+              dv.innerHTML=preSplit[i];
+              console.log("parent?",dv.children)
               continue;
           } //header
           dv.innerHTML=preSplit[i];
