@@ -53,6 +53,7 @@ function doScrape(dir,cb){
         console.log("below", preSplit)
         var dv=document.createElement('div');
         for(var i in preSplit){
+          console.log("pleh",i)
           if(i<1)continue; //header
           dv.innerHTML=preSplit[i];
           console.log("murp",dv.innerHTML)
