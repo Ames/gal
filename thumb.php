@@ -3,7 +3,12 @@
 $width = 200;
 
 $width = $_GET['w'];
-$path  = $_GET['f'];
+$path  = stripslashes($_GET['f']);
+
+//if($_GET['d']){
+//print_r(stripslashes($_GET['f']));
+//exit(); 
+//}
 
 //$path=($_SERVER['QUERY_STRING']);
 
