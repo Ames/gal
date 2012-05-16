@@ -20,13 +20,11 @@ function doScrape(dir,cb){
       var pre=tmp.getElementsByTagName('pre');
 
       if(tbody.length>0){
-        console.log("above")
         tbody=tbody[0];
         
         for(var i in tbody.children){
           if(i<3)continue; //chuck the first 3 (headers,line,back)
           var ch=tbody.children[i];
-          console.log("marp",ch)
           if(ch.childElementCount!=5)continue; //we expect 5.
           
           var f={}
@@ -50,22 +48,17 @@ function doScrape(dir,cb){
       }else if(pre.length>0){
         pre=pre[0];
         preSplit=pre.innerHTML.split('\n');
-        console.log("below", preSplit)
         var dv=document.createElement('div');
         for(var i in preSplit){
-          console.log("pleh",preSplit[i])
           if(i<1){
               dv.innerHTML=preSplit[i];
               parentD = dv.children[7].href;
-              console.log("parent?",parentD)
               continue;
           } //header
           dv.innerHTML=preSplit[i];
-          console.log("murp",dv.innerHTML)
           if(dv.children.length<2)continue;// we want at least 2 things...
           
           var f={};
-          console.log(dv.children[0].src)
           var imgParts=dv.children[0].src.split('/');
           f.type=imgParts[imgParts.length-1].split('.')[0];
           
