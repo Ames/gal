@@ -78,7 +78,7 @@ function init(){
     pd.style.height = 155;
     pd.style.margin = 3;
     pd.style.opacity = .5;
-    pd.style.backgroundColor = "yellow";
+    pd.style.backgroundColor = "white";
     document.body.appendChild(p);
     
     for(var i in imgs){
@@ -98,7 +98,7 @@ function init(){
           folderDiv.style.display = "inline-block";
           folderDiv.style.opacity = .5;
           folderDiv.style.margin = 3;
-          folderDiv.style.backgroundColor = "yellow";
+          folderDiv.style.backgroundColor = "white";
           document.body.appendChild(folderLink);
           continue;
       }
