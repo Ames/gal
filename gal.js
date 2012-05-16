@@ -96,6 +96,7 @@ function init(){
           folderDiv.style.verticalAlign = "middle";
           folderDiv.style.display = "inline-block";
           folderDiv.style.opacity = .5;
+          folderDiv.style.padding = 2;
           folderDiv.style.backgroundColor = "grey";
           document.body.appendChild(folderLink);
           continue;
