@@ -104,7 +104,7 @@ function init(){
   
   getParent=function(){
       var current = location.search;
-      return current.split("/").slice(0,-1).join("/")+'/'
+      return current.split("/").slice(0,-1).join("/")+'/' 
   }
   showImage=function(f){
     document.body.innerHTML=""; //crude
