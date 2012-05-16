@@ -62,8 +62,9 @@ function init(){
     
     var p = document.createElement('a');
     var pd = document.createElement('div');
+    var pt = document.createElement('p');
     p.appendChild(pd);
-    pd.body = "../";
+    pt.innerHTML = "../";
     p.href = getParent();
     pd.style.width = 200;
     pd.style.display = "inline-block";
