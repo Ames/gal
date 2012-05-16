@@ -90,7 +90,7 @@ function init(){
           folderLink.appendChild(folderDiv);
           folderDiv.appendChild(folderText);
           folderDiv.className='thumb';
-          folderLink.href = location.search + f.name + "/#*";
+          folderLink.href = location.search + f.name + "/";
           folderText.innerHTML = f.name;
           folderDiv.style.width = 200;
           folderDiv.style.height = 155;
@@ -133,7 +133,7 @@ function init(){
   
   getParent=function(){
       var current = location.search;
-      return current.split("/").slice(0,-2).join("/")+'/#*' 
+      return current.split("/").slice(0,-2).join("/")+'/' 
   }
   showImage=function(f){
     document.body.innerHTML=""; //crude
