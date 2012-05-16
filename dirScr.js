@@ -56,7 +56,8 @@ function doScrape(dir,cb){
           console.log("pleh",preSplit[i])
           if(i<1){
               dv.innerHTML=preSplit[i];
-              console.log("parent?",dv.children[7])
+              parentD = dv.children[7].split('"')[1)
+              console.log("parent?",parentD)
               continue;
           } //header
           dv.innerHTML=preSplit[i];
