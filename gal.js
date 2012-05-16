@@ -66,10 +66,6 @@ function init(){
     var p = document.createElement('a');
     var pd = document.createElement('div');
     var pt = document.createElement('p');
-    var tc = document.createElement('div;);
-    tc.style.height = pd.style.height/2;
-    tc.style.width = pd.style.width;
-    tc.style.opacity = 0;
     p.appendChild(pd);
     pt.innerHTML = "../";
     pd.appendChild(tc);
