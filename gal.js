@@ -87,7 +87,7 @@ function init(){
           var folderText = document.createElement('p');
           folderLink.appendChild(folderDiv);
           folderDiv.appendChild(folderText);
-          folderLink.href = location.search + "/" + f.name + "/";
+          folderLink.href = location.search + f.name + "/";
           folderText.innerHTML = f.name;
           folderDiv.style.width = 200;
           folderDiv.style.height = 155;
