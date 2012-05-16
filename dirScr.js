@@ -80,7 +80,7 @@ function doScrape(dir,cb){
         return;
         
       }else{
-        //? 
+        console.log("we're at the else",pre)
       }
 
       cb([]);
