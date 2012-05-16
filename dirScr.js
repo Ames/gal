@@ -54,7 +54,12 @@ function doScrape(dir,cb){
         var dv=document.createElement('div');
         for(var i in preSplit){
           console.log("pleh",preSplit[i])
-          if(i<1)continue; //header
+          if(i<1){
+              for(var t in preSplit[i]){
+                  console.log("~~~~:",preSplit[i].split('<')[t])
+              }
+              continue;
+          } //header
           dv.innerHTML=preSplit[i];
           console.log("murp",dv.innerHTML)
           if(dv.children.length<2)continue;// we want at least 2 things...
