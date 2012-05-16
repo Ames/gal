@@ -44,7 +44,7 @@ function init(){
         
         prev=f.name;        
       }else{
-          console.log(f.type)
+          console.log(f.name " " + f.type)
       }
     }
     
