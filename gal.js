@@ -64,7 +64,7 @@ function init(){
     var pd = document.createElement('div');
     p.appendChild(pd);
     p.href = '?' + getParent();
-    pd.style.w = 200;
+    pd.style.width = 200;
     pd.style.alpha = .5;
     pd.style.backgroundColor = "grey";
     document.body.appendChild(p);
