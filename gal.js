@@ -69,7 +69,8 @@ function init(){
     pd.style.w = 200;
     pd.style.alpha = .5;
     pd.style.backgroundColor = "grey";
-
+    document.body.appendChild(p);
+    
     for(var i in imgs){
       if i<1;continue;
       var f=imgs[i];
