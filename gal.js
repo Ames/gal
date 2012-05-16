@@ -45,6 +45,8 @@ function init(){
         prev=f.name;        
       }else if(f.type=='parent'){
       ;
+      }else if(f.type == 'folder'){
+          imgs[f.name] = f;
       }else{
           console.log(f.name,f.type)
       }
@@ -78,7 +80,23 @@ function init(){
     
     for(var i in imgs){
       var f=imgs[i];
-      
+      if(f.type == 'folder'){
+          var folderLink = document.createElement('a');
+          var folderDiv = document.createElement('div');
+          var folderText = document.createElement('p');
+          folderLink.appendChild(folderDiv);
+          folderDiv.appendChild(folderText);
+          folderLink.href = f.name;
+          folderText.innerHTML = f.name;
+          folderDiv.style.width = 200;
+          folderDiv.style.height = 155;
+          folderDiv.style.verticalAlign = "middle";
+          folderDiv.style.display = "inline-block";
+          folderDiv.style.alpha = .5;
+          folderDiv.style.backgroundColor = "grey";
+          document.body.appendChild(folderLink);
+          continue;
+      }
       if(!f.thumb.src)
         f.thumb.src='thumb.php?w=200&f='+f.path;
         
