@@ -1,5 +1,4 @@
 
-function doScrape(dir,cb){
   
   req=new XMLHttpRequest();
   

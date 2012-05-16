@@ -10,10 +10,11 @@ function init(){
   
   var curImg=false;
   
+
+  //Scrape directory
   doScrape(dir,function(files){
        
     
-      console.log(files)
     var prev=false;
     
     for(var i in files){
@@ -42,6 +43,8 @@ function init(){
         }
         
         prev=f.name;        
+      }else{
+          console.log(f.type)
       }
     }
     
