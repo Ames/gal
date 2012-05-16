@@ -3,13 +3,17 @@ function init(){
   
   var dir=document.location.search.substring(1);
   
+  console.log(dir)
+
   var imgs={};
   IMGS=imgs;
   
   var curImg=false;
   
   doScrape(dir,function(files){
-                
+       
+    
+      console.log(files)
     var prev=false;
     
     for(var i in files){
