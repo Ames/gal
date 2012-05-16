@@ -9,7 +9,7 @@ function init(){
   var curImg=false;
   
   doScrape(dir,function(files){
-                
+
     var prev=false;
     
     for(var i in files){
@@ -102,8 +102,13 @@ function init(){
   }
 
   loadImage=function(f){
-    if(!f.img.src)
-        f.img.src='thumb.php?w=1200&f='+f.path;
+    
+    var src='thumb.php?w='+window.innerWidth+'&h='+window.innerHeight+'&f='+f.path;
+    
+    if(f.imgSrc!=src){
+        f.img.src=src;  // this converts it to absolute
+        f.imgSrc=src;   // this preserves the relative, so we can compare
+    }
         //f.img.src=f.path;
         
         //if we were fancy we could look at the current screen/window size...
@@ -113,7 +118,7 @@ function init(){
   }
 
   window.onkeydown=function(e){
-    console.log(e);
+    //console.log(e);
     switch(e.keyIdentifier){
       case 'Left':
       case 'U+004B':
