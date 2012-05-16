@@ -49,7 +49,7 @@ function init(){
           console.log("folder was found");
           imgs[f.name] = f;
       }else{
-          console.log(f.name,f.type)
+         ; //console.log(f.name,f.type)
       }
     }
     
