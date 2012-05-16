@@ -76,7 +76,7 @@ function init(){
     pd.style.display = "inline-block";
     pd.style.verticalAlign = "middle"
     pd.style.height = 155;
-    pd.style.alpha = .5;
+    pd.style.opacity = .5;
     pd.style.backgroundColor = "grey";
     document.body.appendChild(p);
     
@@ -95,7 +95,7 @@ function init(){
           folderDiv.style.height = 155;
           folderDiv.style.verticalAlign = "middle";
           folderDiv.style.display = "inline-block";
-          folderDiv.style.alpha = .5;
+          folderDiv.style.opacity = .5;
           folderDiv.style.backgroundColor = "grey";
           document.body.appendChild(folderLink);
           continue;
