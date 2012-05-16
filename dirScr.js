@@ -26,6 +26,7 @@ function doScrape(dir,cb){
         for(var i in tbody.children){
           if(i<3)continue; //chuck the first 3 (headers,line,back)
           var ch=tbody.children[i];
+          console.log("marp",ch)
           if(ch.childElementCount!=5)continue; //we expect 5.
           
           var f={}
