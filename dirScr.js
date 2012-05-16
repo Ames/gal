@@ -47,9 +47,9 @@ function doScrape(dir,cb){
         return;
         
       }else if(pre.length>0){
-        console.log("below", preSplit)
         pre=pre[0];
         preSplit=pre.innerHTML.split('\n');
+        console.log("below", preSplit)
         var dv=document.createElement('div');
         for(var i in preSplit){
           if(i<1)continue; //header
