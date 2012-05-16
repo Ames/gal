@@ -76,6 +76,7 @@ function init(){
     pd.style.display = "inline-block";
     pd.style.verticalAlign = "middle"
     pd.style.height = 155;
+    pd.style.margin = 3;
     pd.style.opacity = .5;
     pd.style.backgroundColor = "grey";
     document.body.appendChild(p);
