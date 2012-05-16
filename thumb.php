@@ -2,8 +2,12 @@
 // define widescreen dimensions
 $width = 200;
 
-$width = $_GET['w'];
-$path  = stripslashes($_GET['f']);
+$width  = $_GET['w'];
+$height = $_GET['h'];
+$path   = stripslashes($_GET['f']);
+
+if(!$height)
+  $height=$width;
 
 //if($_GET['d']){
 //print_r(stripslashes($_GET['f']));
@@ -16,7 +20,7 @@ $path  = stripslashes($_GET['f']);
 $i = new Imagick($path);
 
 //$i->cropThumbnailImage( $width, $width );
-$i->thumbnailImage( $width, $width, true);
+$i->thumbnailImage( $width, $height, true);
 
 
 $i->setImageFormat("jpg");
