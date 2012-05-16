@@ -68,7 +68,6 @@ function init(){
     var pt = document.createElement('p');
     p.appendChild(pd);
     pt.innerHTML = "../";
-    pd.appendChild(tc);
     pd.appendChild(pt);
     pd.className='thumb';
     p.href = getParent();
