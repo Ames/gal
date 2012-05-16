@@ -82,13 +82,12 @@ function init(){
     for(var i in imgs){
       var f=imgs[i];
       if(f.type=='folder'){
-          console.log("folder creation part");
           var folderLink = document.createElement('a');
           var folderDiv = document.createElement('div');
           var folderText = document.createElement('p');
           folderLink.appendChild(folderDiv);
           folderDiv.appendChild(folderText);
-          folderLink.href = f.name;
+          folderLink.href = location.search + "/" + f.name + "/";
           folderText.innerHTML = f.name;
           folderDiv.style.width = 200;
           folderDiv.style.height = 155;
