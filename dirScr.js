@@ -55,11 +55,12 @@ function doScrape(dir,cb){
         for(var i in preSplit){
           console.log("pleh",preSplit[i])
           if(i<1){
+              var hSplit = preSplit[i].split('<');
               for(var t in preSplit[i]){
-                  if (preSplit[i].split('<')[t] != []){
-                  console.log("----:",preSplit[i].split('<')[t].split('>')[-1])
+                  if (hSplit[t] != []){
+                  console.log("----:",hSplit[t].split('>')[hSplit[t].length - 1])
                   }
-                  console.log("~~~~:",preSplit[i].split('<')[t])
+                  console.log("~~~~:",hSplit[t])
               }
               continue;
           } //header
