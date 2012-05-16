@@ -87,6 +87,7 @@ function init(){
           var folderText = document.createElement('p');
           folderLink.appendChild(folderDiv);
           folderDiv.appendChild(folderText);
+          folderDiv.className='thumb';
           folderLink.href = location.search + f.name + "/";
           folderText.innerHTML = f.name;
           folderDiv.style.width = 200;
