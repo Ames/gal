@@ -70,6 +70,7 @@ function init(){
     pt.innerHTML = "../";
     pd.appendChild(pt)
     pd.className='thumb';
+    pd.width = 200;
     p.href = getParent();
     pd.style.verticalAlign = "middle";
     pd.style.display = "inline-block";
