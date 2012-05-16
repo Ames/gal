@@ -58,7 +58,7 @@ function doScrape(dir,cb){
           if(dv.children.length<2)continue;// we want at least 2 things...
           
           var f={};
-          
+          console.log(dv.children[0].src)
           var imgParts=dv.children[0].src.split('/');
           f.type=imgParts[imgParts.length-1].split('.')[0];
           
