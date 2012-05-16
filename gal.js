@@ -44,7 +44,9 @@ function init(){
         
         prev=f.name;        
       }else if(f.type=='parent'){
+          imgs['parent'] = f;
           f.thumb = document.createElement('div');
+      
       }else{
           console.log(f.name,f.type)
       }
@@ -57,10 +59,19 @@ function init(){
   
   
   window.showThumbs=function(){
-    
 
     document.body.innerHTML="";
+    
+    var p = document.createElement('a');
+    var pd = document.createElement('div');
+    p.appendChild(pd);
+    p.href = '?' + getParent();
+    pd.style.w = 200;
+    pd.style.alpha = .5;
+    pd.style.backgroundColor = "grey";
+
     for(var i in imgs){
+      if i<1;continue;
       var f=imgs[i];
       
       if(!f.thumb.src)
@@ -92,6 +103,10 @@ function init(){
     }    
   }
   
+  getParent=function(){
+      var current = location.search;
+      return current.split("/").slice(0,-1).join("/")
+  }
   showImage=function(f){
     document.body.innerHTML=""; //crude
     
