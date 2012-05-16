@@ -54,7 +54,7 @@ function doScrape(dir,cb){
          if(i<1){
               dv.innerHTML=preSplit[i];
               parentD = dv.children[7].href;
-              f.type =  "folder";
+              f.type =  'parent';
               f.href = parentD;
               files.push(f)
               continue;

@@ -43,8 +43,10 @@ function init(){
         }
         
         prev=f.name;        
+      }else if(f.type=='parent'){
+          f.thumb = document.createElement('div');
       }else{
-          console.log(f.name,f.type,f.children)
+          console.log(f.name,f.type)
       }
     }
     
@@ -56,6 +58,7 @@ function init(){
   
   window.showThumbs=function(){
     
+
     document.body.innerHTML="";
     for(var i in imgs){
       var f=imgs[i];
