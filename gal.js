@@ -63,7 +63,7 @@ function init(){
     var p = document.createElement('a');
     var pd = document.createElement('div');
     p.appendChild(pd);
-    p.href = '?' + getParent();
+    p.href = getParent();
     pd.style.width = 200;
     pd.style.height = 155;
     pd.style.alpha = .5;
