@@ -69,16 +69,8 @@ function init(){
     p.appendChild(pd);
     pt.innerHTML = "../";
     pd.appendChild(pt);
-    pd.className='thumb';
+    pd.className='folder';
     p.href = getParent();
-    pd.style.width = 200;
-    pd.style.verticalAlign = "middle";
-    pd.style.display = "inline-block";
-    pd.style.verticalAlign = "middle"
-    pd.style.height = 155;
-    pd.style.margin = 3;
-    pd.style.opacity = .5;
-    pd.style.backgroundColor = "white";
     document.body.appendChild(p);
     
     for(var i in imgs){
@@ -89,16 +81,9 @@ function init(){
           var folderText = document.createElement('p');
           folderLink.appendChild(folderDiv);
           folderDiv.appendChild(folderText);
-          folderDiv.className='thumb';
+          folderDiv.className='folder';
           folderLink.href = location.search + f.name + "/";
           folderText.innerHTML = f.name;
-          folderDiv.style.width = 200;
-          folderDiv.style.height = 155;
-          folderDiv.style.verticalAlign = "middle";
-          folderDiv.style.display = "inline-block";
-          folderDiv.style.opacity = .5;
-          folderDiv.style.margin = 3;
-          folderDiv.style.backgroundColor = "white";
           document.body.appendChild(folderLink);
           continue;
       }
