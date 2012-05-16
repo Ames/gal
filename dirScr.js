@@ -54,7 +54,7 @@ function doScrape(dir,cb){
         for(var i in preSplit){
           if(i<1)continue; //header
           dv.innerHTML=preSplit[i];
-          
+          console.log("murp",dv.children)
           if(dv.children.length<2)continue;// we want at least 2 things...
           
           var f={};
