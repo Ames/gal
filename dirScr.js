@@ -20,6 +20,7 @@ function doScrape(dir,cb){
       var pre=tmp.getElementsByTagName('pre');
 
       if(tbody.length>0){
+        console.log("above")
         tbody=tbody[0];
         
         for(var i in tbody.children){
@@ -46,6 +47,7 @@ function doScrape(dir,cb){
         return;
         
       }else if(pre.length>0){
+        console.log("below")
         pre=pre[0];
         preSplit=pre.innerHTML.split('\n');
         var dv=document.createElement('div');
