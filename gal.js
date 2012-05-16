@@ -70,11 +70,12 @@ function init(){
     pt.innerHTML = "../";
     pd.appendChild(pt)
     pd.className='thumb';
-    pd.width = 200;
     p.href = getParent();
+    pd.style.width = 200;
     pd.style.verticalAlign = "middle";
     pd.style.display = "inline-block";
     pd.style.verticalAlign = "middle"
+    pd.style.height = 155;
     pd.style.alpha = .5;
     pd.style.backgroundColor = "grey";
     document.body.appendChild(p);
