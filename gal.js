@@ -46,6 +46,7 @@ function init(){
       }else if(f.type=='parent'){
       ;
       }else if(f.type == 'folder'){
+          console.log("folder was found");
           imgs[f.name] = f;
       }else{
           console.log(f.name,f.type)
@@ -81,6 +82,7 @@ function init(){
     for(var i in imgs){
       var f=imgs[i];
       if(f.type == 'folder'){
+          console.log("folder creation part");
           var folderLink = document.createElement('a');
           var folderDiv = document.createElement('div');
           var folderText = document.createElement('p');
