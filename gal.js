@@ -68,6 +68,7 @@ function init(){
     pd.appendChild(pt)
     p.href = getParent();
     pd.style.width = 200;
+    pd.style.verticalAlign = "middle";
     pd.style.display = "inline-block";
     pd.style.verticalAlign = "middle"
     pd.style.height = 155;
