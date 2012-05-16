@@ -50,15 +50,18 @@ function doScrape(dir,cb){
         preSplit=pre.innerHTML.split('\n');
         var dv=document.createElement('div');
         for(var i in preSplit){
-          if(i<1){
+         var f = {}; 
+         if(i<1){
               dv.innerHTML=preSplit[i];
               parentD = dv.children[7].href;
+              f.type =  "folder";
+              f.href = parentD;
+              files.push(f)
               continue;
           } //header
           dv.innerHTML=preSplit[i];
           if(dv.children.length<2)continue;// we want at least 2 things...
           
-          var f={};
           var imgParts=dv.children[0].src.split('/');
           f.type=imgParts[imgParts.length-1].split('.')[0];
           
