@@ -44,9 +44,7 @@ function init(){
         
         prev=f.name;        
       }else if(f.type=='parent'){
-          imgs['parent'] = f;
-          f.thumb = document.createElement('div');
-      
+      ;
       }else{
           console.log(f.name,f.type)
       }
@@ -72,7 +70,6 @@ function init(){
     document.body.appendChild(p);
     
     for(var i in imgs){
-      if i<1;continue;
       var f=imgs[i];
       
       if(!f.thumb.src)
