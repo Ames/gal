@@ -3,13 +3,16 @@ function init(){
   
   var dir=document.location.search.substring(1);
   
+  console.log(dir)
+
   var imgs={};
   IMGS=imgs;
   
   var curImg=false;
   
-  doScrape(dir,function(files){
 
+  //Scrape directory
+  doScrape(dir,function(files){
     var prev=false;
     
     for(var i in files){
@@ -38,6 +41,13 @@ function init(){
         }
         
         prev=f.name;        
+      }else if(f.type=='parent'){
+      ;
+      }else if(f.type=='folder'){
+          console.log("folder was found");
+          imgs[f.name] = f;
+      }else{
+         ; //console.log(f.name,f.type)
       }
     }
     
@@ -48,11 +58,33 @@ function init(){
   
   
   window.showThumbs=function(){
-    
+
     document.body.innerHTML="";
+    
+    var p = document.createElement('a');
+    var pd = document.createElement('div');
+    var pt = document.createElement('p');
+    p.appendChild(pd);
+    pt.innerHTML = "../";
+    pd.appendChild(pt);
+    pd.className='folder';
+    p.href = getParent();
+    document.body.appendChild(p);
+    
     for(var i in imgs){
       var f=imgs[i];
-      
+      if(f.type=='folder'){
+          var folderLink = document.createElement('a');
+          var folderDiv = document.createElement('div');
+          var folderText = document.createElement('p');
+          folderLink.appendChild(folderDiv);
+          folderDiv.appendChild(folderText);
+          folderDiv.className='folder';
+          folderLink.href = location.search + f.name + "/";
+          folderText.innerHTML = f.name;
+          document.body.appendChild(folderLink);
+          continue;
+      }
       if(!f.thumb.src)
         f.thumb.src='thumb.php?w=200&f='+f.path;
         
@@ -82,6 +114,10 @@ function init(){
     }    
   }
   
+  getParent=function(){
+      var current = location.search;
+      return current.split("/").slice(0,-2).join("/")+'/' 
+  }
   showImage=function(f){
     document.body.innerHTML=""; //crude
     
