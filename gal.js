@@ -1,56 +1,7 @@
 
 function init(){
   
-  var dir=document.location.search.substring(1);
   
-  console.log(dir)
-
-  var imgs={};
-  IMGS=imgs;
-  
-  var curImg=false;
-  
-
-  //Scrape directory
-  doScrape(dir,function(files){
-       
-    
-    var prev=false;
-    
-    for(var i in files){
-      var f=files[i];
-      
-      if(f.type=='image2'){
-        
-        f.prev=prev;
-        f.next=false;
-        imgs[f.name]=f;
-        
-        f.path=dir+'/'+f.name; // an extra slash never hurt anyone...
-        
-        f.img=document.createElement('img');
-        
-        //f.img.src=f.path; // we might not want to do this quite yet...
-        
-        f.thumb=document.createElement('img');
-        
-        if(prev){
-          imgs[prev].next=f.name;
-        }
-        
-        if(!prev){
-            loadImage(f); //preload the first image
-        }
-        
-        prev=f.name;        
-      }else if(f.type=='parent'){
-      ;
-      }else if(f.type=='folder'){
-          console.log("folder was found");
-          imgs[f.name] = f;
-      }else{
-         ; //console.log(f.name,f.type)
-      }
     }
     
 
@@ -186,4 +137,55 @@ $(document).bind('pageinit', function(){
           if(curImg.next)
             window.location.hash=curImg.next;
     })
+    
+    var dir=document.location.search.substring(1);
+
+      console.log(dir)
+
+      var imgs={};
+      IMGS=imgs;
+
+      var curImg=false;
+
+
+      //Scrape directory
+      doScrape(dir,function(files){
+
+
+        var prev=false;
+
+        for(var i in files){
+          var f=files[i];
+
+          if(f.type=='image2'){
+
+            f.prev=prev;
+            f.next=false;
+            imgs[f.name]=f;
+
+            f.path=dir+'/'+f.name; // an extra slash never hurt anyone...
+
+            f.img=document.createElement('img');
+
+            //f.img.src=f.path; // we might not want to do this quite yet...
+
+            f.thumb=document.createElement('img    ');
+
+            if(prev){
+              imgs[prev].next=f.name;
+            }
+
+            if(!prev){
+                loadImage(f); //preload the first image
+            }
+
+            prev=f.name;        
+          }else if(f.type=='parent'){
+          ;
+          }else if(f.type=='folder'){
+              console.log("folder was found");
+              imgs[f.name] = f;
+          }else{
+             ; //console.log(f.name,f.type)
+          }
 })
