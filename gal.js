@@ -174,12 +174,12 @@ function init(){
 }
 
 //Mobile jquery
-$(document).bind('pageinit') {
+$(document).bind('pageinit', function(){
     $(window).swiperight(function() {
-        if(curImg)
-          if(curImg.prev)
-            window.location.hash=curImg.prev;
-    });
+        if(curImg){
+          if(curImg.prev){
+            window.location.hash=curImg.prev;}}
+    })})
     
     $(window).swipeleft(function(){
         if(curImg)
