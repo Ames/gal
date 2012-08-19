@@ -2,6 +2,7 @@
 
 //Mobile jquery
 $( document ).bind('pageinit', function(){
+    console.log("trying to init")
 
       vardirectory= $( document ).location.search.substring(1);  
 
