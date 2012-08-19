@@ -1,8 +1,4 @@
 
-function init(){
-  
-  
-}
 
 //Mobile jquery
 $( document ).bind('pageinit', function(){
