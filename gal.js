@@ -2,22 +2,10 @@
 
 //Mobile jquery
 $( document ).bind('pageinit', function(){
-    $( window ).swiperight(function() {
-        if(curImg){
-          if(curImg.prev){
-            window.location.hash=curImg.prev;}}
-    })
-    
-    $( window ).swipeleft(function(){
-        if(curImg)
-          if(curImg.next)
-            window.location.hash=curImg.next;
-    })
-    
-    
-    var dir=document.location.search.substring(1);
 
-      console.log(dir)
+      vardirectory= $( document ).location.search.substring(1);  
+
+      console.log(directory)
 
       var imgs={};
       IMGS=imgs;
@@ -25,8 +13,8 @@ $( document ).bind('pageinit', function(){
       var curImg=false;
 
 
-      //Scrape directory
-      doScrape(dir,function(files){
+      //Scrapedirectoryectory
+      doScrape(directory,function(files){
 
 
         var prev=false;
@@ -185,4 +173,18 @@ $( document ).bind('pageinit', function(){
 
         }
       }
+      
+      $( window ).swiperight(function() {
+          if(curImg){
+            if(curImg.prev){
+              window.location.hash=curImg.prev;}}
+      })
+
+      $( window ).swipeleft(function(){
+          if(curImg)
+            if(curImg.next)
+              window.location.hash=curImg.next;
+      })
+
+      
 })
