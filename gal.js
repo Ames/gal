@@ -3,6 +3,8 @@ function init(){
   
   var dir=document.location.search.substring(1);
   
+  console.log(dir)
+
   var imgs={};
   IMGS=imgs;
   
