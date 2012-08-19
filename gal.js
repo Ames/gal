@@ -179,11 +179,11 @@ $(document).bind('pageinit', function(){
         if(curImg){
           if(curImg.prev){
             window.location.hash=curImg.prev;}}
-    })})
+    })
     
     $(window).swipeleft(function(){
         if(curImg)
           if(curImg.next)
             window.location.hash=curImg.next;
     })
-}
+})
