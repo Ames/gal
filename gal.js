@@ -6,13 +6,13 @@ function init(){
 
 //Mobile jquery
 $(document).bind('pageinit', function(){
-    $(window).swiperight(function() {
+    $("*").swiperight(function() {
         if(curImg){
           if(curImg.prev){
             window.location.hash=curImg.prev;}}
     })
     
-    $(window).swipeleft(function(){
+    $("*").swipeleft(function(){
         if(curImg)
           if(curImg.next)
             window.location.hash=curImg.next;
