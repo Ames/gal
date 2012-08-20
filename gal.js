@@ -116,6 +116,8 @@ $( document ).bind('pageinit', function(){
           window.showThumbs();
         }else if(imgs[name]){
           showImage(imgs[name]);
+        }else if(name=="listimg"){
+            console.log(imgs);
         }else{
           window.location.hash='*';
         }    
