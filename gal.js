@@ -29,7 +29,7 @@ $( document ).bind('pageinit', function(){
             f.next=false;
             imgs[f.name]=f;
 
-            f.path=dir+'/'+f.name; // an extra slash never hurt anyone...
+            f.path=directory+'/'+f.name; // an extra slash never hurt anyone...
 
             f.img=document.createElement('img');
 
