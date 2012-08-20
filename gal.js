@@ -183,13 +183,18 @@ $( document ).bind('pageinit', function(){
       $( window ).swiperight(function() {
           if(curImg){
             if(curImg.prev){
-              window.location.hash=curImg.prev;}}
+              window.location.hash=curImg.prev;}
+            else{
+                window.location.hash='*';
+            }}
       })
 
       $( window ).swipeleft(function(){
           if(curImg)
             if(curImg.next)
               window.location.hash=curImg.next;
+            else
+              window.location.hash='*';
       })
 
       
