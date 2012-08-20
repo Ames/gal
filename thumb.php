@@ -25,6 +25,11 @@ $i->thumbnailImage( $width, $height, true);
 
 $i->setImageFormat("jpg");
 header("Content-Type: image/jpeg");
+
+header("Cache-Control: public");
+header("Expires: " . date(DATE_RFC822,strtotime("30 day")));
+header("Etag: please_cache");
+
 exit($i);
 
 ?>
