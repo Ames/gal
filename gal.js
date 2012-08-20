@@ -35,7 +35,7 @@ $( document ).bind('pageinit', function(){
 
             //f.img.src=f.path; // we might not want to do this quite yet...
 
-            f.thumb=document.createElement('img    ');
+            f.thumb=document.createElement('img');
 
             if(prev){
               imgs[prev].next=f.name;
