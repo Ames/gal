@@ -3,11 +3,11 @@
 //Mobile jquery
 $( document ).bind('pageinit', function(){
     
-    console.log("trying to init")
+    //console.log("trying to init")
 
       var directory= document.location.search.substring(1);  
 
-      console.log(directory)
+      //console.log(directory)
 
       var imgs={};
       IMGS=imgs;
@@ -50,7 +50,7 @@ $( document ).bind('pageinit', function(){
           }else if(f.type=='parent'){
           ;
           }else if(f.type=='folder'){
-              console.log("folder was found");
+              //console.log("folder was found");
               imgs[f.name] = f;
           }else{
              ; //console.log(f.name,f.type)
@@ -112,7 +112,7 @@ $( document ).bind('pageinit', function(){
       window.onhashchange=function(){
         var name=window.location.hash.substring(1);
         //handle none;
-        console.log("Hash changed to: "+ name);
+        //console.log("Hash changed to: "+ name);
         if(name=='*'){
           window.showThumbs();
         }else if(imgs[name]){
@@ -159,7 +159,7 @@ $( document ).bind('pageinit', function(){
       }
 
       window.onkeydown=function(e){
-        console.log(e);
+        //console.log(e);
         switch(e.keyIdentifier){
           case 'Left':
           case 'U+004B':
