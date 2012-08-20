@@ -2,6 +2,8 @@
 
 //Mobile jquery
 $( document ).bind('pageinit', function(){
+    
+    $.mobile.hashListeningEnabled = false;
     console.log("trying to init")
 
       var directory= document.location.search.substring(1);  
