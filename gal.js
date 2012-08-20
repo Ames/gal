@@ -97,6 +97,7 @@ $( document ).bind('pageinit', function(){
           //f.img.className='thumb';
           f.thumb.className='thumb';
           var a=document.createElement('a');
+          console.log(f.name)
           a.href='#'+f.name;
           //a.appendChild(f.img);
           a.appendChild(f.thumb);
