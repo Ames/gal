@@ -111,6 +111,7 @@ $( document ).bind('pageinit', function(){
       window.onhashchange=function(){
         var name=window.location.hash.substring(1);
         //handle none;
+        console.log("Hash changed to: "+ name);
         if(name=='*'){
           window.showThumbs();
         }else if(imgs[name]){
