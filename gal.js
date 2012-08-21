@@ -22,6 +22,8 @@ $( document ).bind('pageinit', function(){
          win[0] = window.innerWidth;
          win[1] = window.innerHeight;
          
+         if(window.doLayout)
+            doLayout();
          // reload the image??
       }
       
@@ -30,6 +32,7 @@ $( document ).bind('pageinit', function(){
       //Scrapedirectoryectory
       doScrape(directory,function(files){
 
+        console.log(files);
 
         var prev=false;
 
@@ -60,29 +63,67 @@ $( document ).bind('pageinit', function(){
 
             prev=f.name;        
           }else if(f.type=='parent'){
-          ;
+             imgs['../']=f;
+             f.name='../';
+             f.type='folder';
+             
           }else if(f.type=='folder'){
               //console.log("folder was found");
               imgs[f.name] = f;
+              
+//              f.w=1;
+//              f.h=1;
+              
           }else{
              ; //console.log(f.name,f.type)
           }
         }
 
+        
+                var files=[];
+        for(var i in imgs){
+            var f=imgs[i];
+            if(f.type=='image2'){
+                files.push(imgs[i].path);
+            }
 
-        window.onhashchange();
+        }
+        
+        // we get a nice error if files is empty
+        
+        postRequest('thumb.php','info='+files.join(','),function(info){
+            console.log(info);
+            
+            for(var i in imgs){
+                var f=imgs[i];
+                var inf=info[decodeURIComponent(f.path)];
+                if(!inf){
+                    console.log('no info for',f);
+                    f.w=1;
+                    f.h=1;
+                }else{
+                    f.w=inf.w;
+                    f.h=inf.h;
+                }
+            }
+            
+            
+            window.onhashchange();
+        });
 
       });
 
 
       window.showThumbs=function(){
 
+        
+         
         document.body.innerHTML="";
 
         var container = document.createElement('div');
         document.body.appendChild(container);
 
-
+/*
         var p = document.createElement('a');
         var pd = document.createElement('div');
         var pt = document.createElement('p');
@@ -91,14 +132,9 @@ $( document ).bind('pageinit', function(){
         pd.appendChild(pt);
         pd.className='folder';
         p.href = getParent();
-        container.appendChild(p);
-        //document.body.appendChild(p);
+        //container.appendChild(p);
+*/
 
-
-        window.wall = new Masonry(container, {
-            gutterWidth:1,
-            columnWidth:1
-        });
         for(var i in imgs){
           var f=imgs[i];
           if(f.type=='folder'){
@@ -108,14 +144,18 @@ $( document ).bind('pageinit', function(){
               folderLink.appendChild(folderDiv);
               folderDiv.appendChild(folderText);
               folderDiv.className='folder';
-              folderLink.href = location.search + f.name + "/";
+              folderLink.href = location.search + f.name + "/#*";
+              if(f.name=='../') folderLink.href=getParent()
               folderText.innerHTML = f.name;
               container.appendChild(folderLink);
+              
+              f.thumb=folderDiv;
               //document.body.appendChild(folderLink);
               continue;
           }
-          if(!f.thumb.src)
-            f.thumb.src='thumb.php?perim=400&f='+f.path;
+          
+          //if(!f.thumb.src)
+            //f.thumb.src='thumb.php?perim=400&f='+f.path;
 
           //console.log(f.thumb)
           //f.img.className='thumb';
@@ -124,7 +164,7 @@ $( document ).bind('pageinit', function(){
           
           f.thumb.onload = function(){
              //f.thumb.style.display='block';
-             window.wall.reload()
+             //window.wall.reload()
           };
           //console.log("blah");
           var a=document.createElement('a');
@@ -133,29 +173,100 @@ $( document ).bind('pageinit', function(){
           //a.appendChild(f.img);
           a.appendChild(f.thumb);
           
-          //container.appendChild(a);
+          container.appendChild(a);
           
-          (function(aBox,th){
+          f.thumb.style.opacity=0;
+          
+          (function(th){
               th.onload = function(){
-                 //f.thumb.style.display='block';
-                 //window.wall.reload()
-                 aBox.style.visibility='hidden';
-                 container.appendChild(aBox);
-                 window.wall.appended([aBox],true);
-                 setTimeout(function(){
-                    aBox.style.visibility='';
-                 },20);
+                 th.style.opacity=1;
               };
-          })(a,f.thumb);
+          })(f.thumb);
           
            //document.body.appendChild(a);
            
           //txt+='<a href="#'+f.name+'"><img src="'+f.path+'" class="thumb"></a>';
         }
+        
+        
+        doLayout();
+        
+
         //document.body.innerHTML=txt;
 
-        wall.reload();
+        //wall.reload();
       }
+      
+      
+      doLayout=function(){
+        
+        //k, now lay out the images
+        
+        // this is where we'd start if we wanted to re-layout, e.g. after resize
+        
+        
+        // we're doing it justified. flickr style.
+        
+        // the idea is:
+        //   with a fixed height, add images to a row.
+        //   once the row is past a certain threshold,
+        //     resize the row vertically so that it fits horizontally.
+        
+        var targetRatio=win[0]/220;
+        var margin=4;
+        
+        var rowMax=win[0]/targetRatio;
+        
+        
+        var addRow=function(row,rowTotal){
+            var rowHeight=(win[0]-(row.length+1)*margin)/rowTotal;
+            if(rowHeight>rowMax)rowHeight=rowMax;
+            
+            console.log(row,rowTotal,rowHeight);
+            
+            for(var j in row){
+                var g=row[j];
+                var w=Math.round(rowHeight/g.h*g.w-margin);
+                var h=Math.round(rowHeight-margin);
+                
+                g.thumb.style.width=w+'px';
+                g.thumb.style.height=h+'px';
+                g.thumb.src='thumb.php?w='+(w+10)+'&h='+h+'&f='+g.path;
+            }
+        }
+        
+        
+        var curRow,curRowTotal;
+        
+        for(var i in imgs){
+            var f=imgs[i];
+            
+            if(!curRow){
+                curRowTotal=0;
+                curRow=[];
+            }
+            
+            curRow.push(f);
+            curRowTotal+=f.w/f.h;
+            
+            //console.log(f.w/f.h);
+            
+            if(curRowTotal>=targetRatio){
+                addRow(curRow,curRowTotal);
+                curRow=false;
+            }
+        }
+        if(curRow)
+            addRow(curRow,curRowTotal); //this might get awkward...
+
+        
+        
+
+        console.log(imgs); 
+        
+      }
+      
+      
 
       window.onhashchange=function(){
         var name=window.location.hash.substring(1);
@@ -174,7 +285,7 @@ $( document ).bind('pageinit', function(){
 
       getParent=function(){
           var current = location.search;
-          return current.split("/").slice(0,-2).join("/")+'/' 
+          return current.split("/").slice(0,-2).join("/")+'/#*' 
       }
       showImage=function(f){
         document.body.innerHTML=""; //crude
@@ -247,4 +358,20 @@ $( document ).bind('pageinit', function(){
       })
 
       
-})
+});
+
+// makes an ajax request, calls cb with parsed json or empty for error
+function postRequest(url,data,cb){
+    var req=new XMLHttpRequest();
+    req.onreadystatechange=function(){
+        if (req.readyState==4 && req.status==200){
+            cb(JSON.parse(req.responseText));
+        }
+        if (req.readyState==4 && req.status!=200){
+            cb({});
+        }
+    }
+    req.open("POST",url,true);
+    req.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    req.send(data);
+}
