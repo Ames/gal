@@ -19,6 +19,21 @@ if(!$height)
 // load an image
 $i = new Imagick($path);
 
+
+
+switch($i->getImageOrientation()) {
+
+    case 6: // rotate 90 degrees CW
+        $i->rotateimage("#FFF", 90);
+    break;
+
+    case 8: // rotate 90 degrees CCW
+        $i->rotateimage("#FFF", -90);
+    break;
+
+}
+
+
 //$i->cropThumbnailImage( $width, $width );
 $i->thumbnailImage( $width, $height, true);
 
