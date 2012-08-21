@@ -104,7 +104,7 @@ $( document ).bind('pageinit', function(){
               continue;
           }
           if(!f.thumb.src)
-            f.thumb.src='thumb.php?w=200&f='+f.path;
+            f.thumb.src='thumb.php?h=180&w=400&f='+f.path;
 
           //f.img.className='thumb';
           f.thumb.className='thumb';

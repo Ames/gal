@@ -1,6 +1,6 @@
 <?php
 // define widescreen dimensions
-$width = 200;
+$default = 100;
 
 $width  = $_GET['w'];
 $height = $_GET['h'];
@@ -8,6 +8,13 @@ $path   = stripslashes($_GET['f']);
 
 if(!$height)
   $height=$width;
+
+if(!$width)
+  $width=$height;
+
+if(!$width && !$height)
+    $height=$width=$default;
+
 
 //if($_GET['d']){
 //print_r(stripslashes($_GET['f']));
