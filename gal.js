@@ -95,7 +95,10 @@ $( document ).bind('pageinit', function(){
         //document.body.appendChild(p);
 
 
-        window.wall = new Masonry(container, {gutterWidth:1});
+        window.wall = new Masonry(container, {
+            gutterWidth:1,
+            columnWidth:1
+        });
         for(var i in imgs){
           var f=imgs[i];
           if(f.type=='folder'){
@@ -112,7 +115,7 @@ $( document ).bind('pageinit', function(){
               continue;
           }
           if(!f.thumb.src)
-            f.thumb.src='thumb.php?h=180&w=400&f='+f.path;
+            f.thumb.src='thumb.php?h=200&w=200&f='+f.path;
 
           console.log(f.thumb)
           //f.img.className='thumb';
