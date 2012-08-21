@@ -175,7 +175,7 @@ $( document ).bind('pageinit', function(){
           
           container.appendChild(a);
           
-          f.thumb.style.opacity=0;
+          //f.thumb.style.opacity=0;
           
           (function(th){
               th.onload = function(){
