@@ -15,25 +15,53 @@ body{
   background-color:#333;
 }
 .thumb{
-  margin:3px;
-  vertical-align:middle;
+    margin:3px;
+    float:left;
+    vertical-align:middle;
 }
 .big{
-  max-width:100%;
-  max-height:100%;
+    max-width:100%;
+    max-height:100%;
 }
 .folder{
-		background-color:#FFFFFF;
-		opacity:.2;
-		vertical-align:middle;
-		margin:3px;
-		height:180px;
-		width:180px;
-		display:inline-block;
-		margin:3px;
+    background-color:#FFFFFF;
+    opacity:.2;
+    vertical-align:middle;
+    margin:3px;
+    height:180px;
+    width:180px;
+    display:inline-block;
+    margin:3px;
+    float:left;
+}
+
+.masonry,
+.masonry .masonry-brick {
+    -webkit-transition-duration: 0.7s;
+    -moz-transition-duration: 0.7s;
+    -ms-transition-duration: 0.7s;
+    -o-transition-duration: 0.7s;
+    transition-duration: 0.7s;
+}
+
+.masonry {
+    -webkit-transition-property: width, height;
+    -moz-transition-property: width, height;
+    -ms-transition-property: width, height;
+    -o-transition-property: width, height;
+    transition-property: width, height;
+}
+
+.masonry .masonry-brick {
+    -webkit-transition-property: left, right, top;
+    -moz-transition-property: left, right, top;
+    -ms-transition-property: left, right, top;
+    -o-transition-property: left, right, top;
+    transition-property: left, right, top;
 }
 </style>
 </head>
 <body>
 </body>
+<script src="http://vanilla-masonry.desandro.com/masonry.min.js"></script>
 </html>

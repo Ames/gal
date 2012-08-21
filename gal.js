@@ -79,6 +79,10 @@ $( document ).bind('pageinit', function(){
 
         document.body.innerHTML="";
 
+        var container = document.createElement('div');
+        document.body.appendChild(container);
+
+
         var p = document.createElement('a');
         var pd = document.createElement('div');
         var pt = document.createElement('p');
@@ -87,8 +91,11 @@ $( document ).bind('pageinit', function(){
         pd.appendChild(pt);
         pd.className='folder';
         p.href = getParent();
-        document.body.appendChild(p);
+        container.appendChild(p);
+        //document.body.appendChild(p);
 
+
+        window.wall = new Masonry(container, {gutterWidth:1});
         for(var i in imgs){
           var f=imgs[i];
           if(f.type=='folder'){
@@ -100,25 +107,31 @@ $( document ).bind('pageinit', function(){
               folderDiv.className='folder';
               folderLink.href = location.search + f.name + "/";
               folderText.innerHTML = f.name;
-              document.body.appendChild(folderLink);
+              container.appendChild(folderLink);
+              //document.body.appendChild(folderLink);
               continue;
           }
           if(!f.thumb.src)
             f.thumb.src='thumb.php?h=180&w=400&f='+f.path;
 
+          console.log(f.thumb)
           //f.img.className='thumb';
           f.thumb.className='thumb';
+          f.thumb.onload = function(){window.wall.reload()};
+          console.log("blah");
           var a=document.createElement('a');
           console.log(f.name)
           a.href='#'+f.name;
           //a.appendChild(f.img);
           a.appendChild(f.thumb);
-          document.body.appendChild(a);
+          container.appendChild(a);
+          //document.body.appendChild(a);
 
           //txt+='<a href="#'+f.name+'"><img src="'+f.path+'" class="thumb"></a>';
         }
         //document.body.innerHTML=txt;
 
+        wall.reload();
       }
 
       window.onhashchange=function(){
