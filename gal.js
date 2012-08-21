@@ -115,21 +115,41 @@ $( document ).bind('pageinit', function(){
               continue;
           }
           if(!f.thumb.src)
-            f.thumb.src='thumb.php?h=200&w=200&f='+f.path;
+            f.thumb.src='thumb.php?perim=400&f='+f.path;
 
-          console.log(f.thumb)
+          //console.log(f.thumb)
           //f.img.className='thumb';
           f.thumb.className='thumb';
-          f.thumb.onload = function(){window.wall.reload()};
-          console.log("blah");
+
+          
+          f.thumb.onload = function(){
+             //f.thumb.style.display='block';
+             window.wall.reload()
+          };
+          //console.log("blah");
           var a=document.createElement('a');
-          console.log(f.name)
+          //console.log(f.name)
           a.href='#'+f.name;
           //a.appendChild(f.img);
           a.appendChild(f.thumb);
-          container.appendChild(a);
-          //document.body.appendChild(a);
-
+          
+          //container.appendChild(a);
+          
+          (function(aBox,th){
+              th.onload = function(){
+                 //f.thumb.style.display='block';
+                 //window.wall.reload()
+                 aBox.style.visibility='hidden';
+                 container.appendChild(aBox);
+                 window.wall.appended([aBox],true);
+                 setTimeout(function(){
+                    aBox.style.visibility='';
+                 },20);
+              };
+          })(a,f.thumb);
+          
+           //document.body.appendChild(a);
+           
           //txt+='<a href="#'+f.name+'"><img src="'+f.path+'" class="thumb"></a>';
         }
         //document.body.innerHTML=txt;

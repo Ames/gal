@@ -4,7 +4,10 @@ $default = 100;
 
 $width  = $_GET['w'];
 $height = $_GET['h'];
+$perim = $_GET['perim'];
+$info = $_GET['info'];
 $path   = stripslashes($_GET['f']);
+
 
 if(!$height)
   $height=$width;
@@ -40,6 +43,17 @@ switch($i->getImageOrientation()) {
 
 }
 
+if($perim){
+    $ratio=($i->getImageHeight())/($i->getImageWidth());
+    
+    $width=ceil($perim/($ratio+1));
+    $height=$perim-$width;
+}
+
+if($info){
+    header("Content-Type: application/json");
+    exit("{\"width\":{$i->getImageWidth()},\"height\":{$i->getImageHeight()}}");    
+}
 
 //$i->cropThumbnailImage( $width, $width );
 $i->thumbnailImage( $width, $height, true);
