@@ -15,7 +15,18 @@ $( document ).bind('pageinit', function(){
 
       var curImg=false;
 
+      var win=[];
+      
+      window.onresize=function(){
 
+         win[0] = window.innerWidth;
+         win[1] = window.innerHeight;
+         
+         // reload the image??
+      }
+      
+      window.onresize();
+      
       //Scrapedirectoryectory
       doScrape(directory,function(files){
 
@@ -150,7 +161,7 @@ $( document ).bind('pageinit', function(){
 
       loadImage=function(f){
         if(!f.img.src)
-            f.img.src='thumb.php?w=1200&f='+f.path;
+            f.img.src='thumb.php?w='+win[0]+'&h='+win[1]+'&f='+f.path;
             //f.img.src=f.path;
 
             //if we were fancy we could look at the current screen/window size...
