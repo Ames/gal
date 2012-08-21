@@ -32,7 +32,7 @@ $( document ).bind('pageinit', function(){
       //Scrapedirectoryectory
       doScrape(directory,function(files){
 
-        console.log(files);
+        //console.log(files);
 
         var prev=false;
 
@@ -92,13 +92,13 @@ $( document ).bind('pageinit', function(){
         // we get a nice error if files is empty
         
         postRequest('thumb.php','info='+files.join(','),function(info){
-            console.log(info);
+            //console.log(info);
             
             for(var i in imgs){
                 var f=imgs[i];
                 var inf=info[decodeURIComponent(f.path)];
                 if(!inf){
-                    console.log('no info for',f);
+                    //console.log('no info for',f);
                     f.w=1;
                     f.h=1;
                 }else{
@@ -222,7 +222,7 @@ $( document ).bind('pageinit', function(){
             var rowHeight=(win[0]-(row.length+1)*margin)/rowTotal;
             if(rowHeight>rowMax)rowHeight=rowMax;
             
-            console.log(row,rowTotal,rowHeight);
+            //console.log(row,rowTotal,rowHeight);
             
             for(var j in row){
                 var g=row[j];
@@ -262,7 +262,7 @@ $( document ).bind('pageinit', function(){
         
         
 
-        console.log(imgs); 
+        //console.log(imgs); 
         
       }
       
