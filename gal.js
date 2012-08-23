@@ -12,6 +12,14 @@ $( document ).bind('pageinit', function(){
 
       var imgs={};
       IMGS=imgs;
+      
+      var lazyload = true;
+      // lazy loading will work like this:
+      //    the function shouldLoadThumb(img) returns true if img is near view
+      //    initially, no images are loaded.
+      //    whenever the 
+      
+      //var lazyLoad=[];
 
       var curImg=false;
 
@@ -80,36 +88,41 @@ $( document ).bind('pageinit', function(){
         }
 
         
-                var files=[];
+        var files=[];
         for(var i in imgs){
             var f=imgs[i];
             if(f.type=='image2'){
-                files.push(imgs[i].path);
+                files.push(f.path);
             }
-
+            f.w=1;
+            f.h=1;
         }
         
         // we get a nice error if files is empty
         
-        postRequest('thumb.php','info='+files.join(','),function(info){
-            //console.log(info);
+        if(files.length){
             
-            for(var i in imgs){
-                var f=imgs[i];
-                var inf=info[decodeURIComponent(f.path)];
-                if(!inf){
-                    //console.log('no info for',f);
-                    f.w=1;
-                    f.h=1;
-                }else{
-                    f.w=inf.w;
-                    f.h=inf.h;
+            postRequest('thumb.php','info='+files.join(','),function(info){
+                //console.log(info);
+                
+                for(var i in imgs){
+                    var f=imgs[i];
+                    var inf=info[decodeURIComponent(f.path)];
+                    if(inf){
+                        f.w=inf.w;
+                        f.h=inf.h;
+                    }else{
+                        //console.log('no info for',f);
+                    }
                 }
-            }
+                
+                window.onhashchange();
+            });
             
-            
+        }else{ // no images
+        
             window.onhashchange();
-        });
+        }
 
       });
 
@@ -160,7 +173,7 @@ $( document ).bind('pageinit', function(){
           //console.log(f.thumb)
           //f.img.className='thumb';
           f.thumb.className='thumb';
-
+          
           
           f.thumb.onload = function(){
              //f.thumb.style.display='block';
@@ -170,6 +183,7 @@ $( document ).bind('pageinit', function(){
           var a=document.createElement('a');
           //console.log(f.name)
           a.href='#'+f.name;
+          a.className='thumbHolder';
           //a.appendChild(f.img);
           a.appendChild(f.thumb);
           
@@ -212,7 +226,7 @@ $( document ).bind('pageinit', function(){
         //   once the row is past a certain threshold,
         //     resize the row vertically so that it fits horizontally.
         
-        var targetRatio=win[0]/220;
+        var targetRatio=win[0]/250;
         var margin=4;
         
         var rowMax=win[0]/targetRatio;
@@ -231,7 +245,11 @@ $( document ).bind('pageinit', function(){
                 
                 g.thumb.style.width=w+'px';
                 g.thumb.style.height=h+'px';
-                g.thumb.src='thumb.php?w='+(w+10)+'&h='+h+'&f='+g.path;
+                
+                g.thumbW=w;
+                g.thumbH=h;
+                
+                //g.thumb.src='thumb.php?w='+w+'&h='+h+'&f='+g.path;
             }
         }
         
@@ -260,7 +278,7 @@ $( document ).bind('pageinit', function(){
             addRow(curRow,curRowTotal); //this might get awkward...
 
         
-        
+        doLazyLoad();
 
         //console.log(imgs); 
         
@@ -273,6 +291,7 @@ $( document ).bind('pageinit', function(){
         //handle none;
         //console.log("Hash changed to: "+ name);
         if(name=='*'){
+            curImg=false;
           window.showThumbs();
         }else if(imgs[name]){
           showImage(imgs[name]);
@@ -315,6 +334,43 @@ $( document ).bind('pageinit', function(){
             // we'd probably snap to a few standard sizes, to make cacheing more effective
 
             // it'd be cool to prioritize loading
+      }
+
+      // load the thumbs in view.
+      doLazyLoad=function(){
+        for(var i in imgs){
+            var img=imgs[i];
+            var src='thumb.php?w='+img.thumbW+'&h='+img.thumbH+'&f='+img.path;
+            if(shouldLoadThumb(img) && img.thumb.src!=src)
+                img.thumb.src=src;
+            // we'll hope this won't prompt an image to reload if w and h didn't change...
+        }
+
+      }
+      
+      // returns true if a thumb should be loaded
+      shouldLoadThumb=function(img){
+         
+         if(!img.thumb) return false;
+         
+         if(!lazyload) return true; //show everything
+         
+         var preloadMargin=1000; // how far out of view an image needs to be to load it
+         
+         // we want to load an image if any of it is visible, or perhaps almost visible...
+         var winTop=document.body.scrollTop;
+         var imgTop=img.thumb.offsetTop;
+         var winH=win[1];
+         var imgH=img.thumbH;
+         
+         return imgTop + imgH + preloadMargin > winTop
+             && imgTop - preloadMargin < winTop + winH;
+        
+      }
+      
+      window.onscroll=function(){
+        doLazyLoad();
+        
       }
 
       window.onkeydown=function(e){
@@ -365,7 +421,11 @@ function postRequest(url,data,cb){
     var req=new XMLHttpRequest();
     req.onreadystatechange=function(){
         if (req.readyState==4 && req.status==200){
-            cb(JSON.parse(req.responseText));
+            if(req.responseText){
+                cb(JSON.parse(req.responseText));
+            }else{
+                cb({});
+            }
         }
         if (req.readyState==4 && req.status!=200){
             cb({});
