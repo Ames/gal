@@ -200,7 +200,7 @@ $( document ).bind('pageinit', function(){
           (function(th){
               th.onload = function(){
                  th.style.opacity=1;
-                 th.parentNode.style.background = "transparant"
+                 th.parentNode.style.background = "transparent"
               };
           })(f.thumb);
 
