@@ -155,7 +155,8 @@ $( document ).bind('pageinit', function(){
               folderLink.href = location.search + f.name + "/#*";
               if(f.name=='../') folderLink.href=getParent()
               folderText.innerHTML = f.name;
-              container.appendChild(folderLink);
+
+                          container.appendChild(folderLink);
               
               f.thumb=folderDiv;
               //document.body.appendChild(folderLink);
@@ -180,8 +181,18 @@ $( document ).bind('pageinit', function(){
           a.href='#'+f.name;
           a.className='thumbHolder';
           //a.appendChild(f.img);
+          
           a.appendChild(f.thumb);
           
+                 //lets add some color
+              //
+              R = Math.floor(Math.random()*256)
+              G = Math.floor(Math.random()*256)
+              B = Math.floor(Math.random()*256)
+              var col = 'rgba(' + R + ',' + G  + ',' + B + ',0.1)';
+              a.style.background = col;
+           
+
           container.appendChild(a);
           
           //f.thumb.style.opacity=0;
@@ -189,8 +200,10 @@ $( document ).bind('pageinit', function(){
           (function(th){
               th.onload = function(){
                  th.style.opacity=1;
+                 th.parentNode.style.background = "transparant"
               };
           })(f.thumb);
+
           
            //document.body.appendChild(a);
            
@@ -243,7 +256,8 @@ $( document ).bind('pageinit', function(){
                 
                 g.thumbW=w;
                 g.thumbH=h;
-                
+
+               
                 //g.thumb.src='thumb.php?w='+w+'&h='+h+'&f='+g.path;
             }
         }
@@ -283,6 +297,7 @@ $( document ).bind('pageinit', function(){
 
       window.onhashchange=function(){
         var name=window.location.hash.substring(1);
+        //r
         //handle none;
         //console.log("Hash changed to: "+ name);
         if(name=='*'){
