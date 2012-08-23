@@ -64,6 +64,7 @@ if($info){
     
     $thumb = imagecreatetruecolor($thumbW, $thumbH);
     imagecopyresampled($thumb, $img, 0, 0, 0, 0, $thumbW, $thumbH, $w, $h);
+    //imagecopyresized($thumb, $img, 0, 0, 0, 0, $thumbW, $thumbH, $w, $h);
 
     header("Content-Type: image/jpeg");
     
