@@ -14,17 +14,22 @@ body{
   text-align:center;
   background-color:#333;
 }
-.thumb{
+.thumbHolder{
     margin:4px;
-    //float:left;
+    display:inline-block;
     vertical-align:middle;
+    background-color:#2a2a2a;
+}
+.thumb{
+    //float:left;
     opacity:0;
     
             transition: opacity .3s;
        -moz-transition: opacity .3s;
     -webkit-transition: opacity .3s;
          -o-transition: opacity .3s;
-
+         
+    margin: 0px 0px -4px; /* why? */
 }
 .big{
     max-width:100%;
@@ -44,5 +49,5 @@ body{
 </head>
 <body>
 </body>
-<script src="http://vanilla-masonry.desandro.com/masonry.min.js"></script>
+<!--<script src="http://vanilla-masonry.desandro.com/masonry.min.js"></script>-->
 </html>
