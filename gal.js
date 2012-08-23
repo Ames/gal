@@ -384,7 +384,29 @@ $( document ).bind('pageinit', function(){
       }
 
       window.onkeydown=function(e){
-        //console.log(e);
+        console.log(e.keyIdentifier);
+        switch(e.keyCode){
+          case 'Left':
+          case 'U+004B':
+          case 37:
+            if(curImg)
+              if(curImg.prev)
+                window.location.hash=curImg.prev;
+            break;
+          case 'Right':
+          case 'U+004A':
+          case 39:
+            if(curImg)
+              if(curImg.next)
+                window.location.hash=curImg.next;
+            break;
+          case 'U+001B': //esc
+          case 27:
+            window.location.hash='*';
+            break;  
+/*
+
+          console.log(e.keyIdentifier);
         switch(e.keyIdentifier){
           case 'Left':
           case 'U+004B':
@@ -401,7 +423,7 @@ $( document ).bind('pageinit', function(){
           case 'U+001B': //esc
             window.location.hash='*';
             break;  
-
+*/
         }
       }
 
