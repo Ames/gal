@@ -350,7 +350,7 @@ $( document ).bind('pageinit', function(){
          
          if(!lazyload) return true; //show everything
          
-         var preloadMargin=1000; // how far out of view an image needs to be to load it
+         var preloadMargin=win[1]*1.5; // how far out of view an image needs to be to load it
          
          // we want to load an image if any of it is visible, or perhaps almost visible...
          var winTop=document.body.scrollTop;
