@@ -1,17 +1,16 @@
 
 
-//Mobile jquery
+/**
+*This is the holder for all the javascript. It is bound at document load.
+*Provided by jQuery. Keep everything in here.
+*/
 $( document ).bind('pageinit', function(){
 
-    
-    //console.log("trying to init")
-
-      var directory= document.location.search.substring(1);  
-
-      //console.log(directory)
+	//Current Directory
+	  var directory= document.location.search.substring(1);  
 
       var imgs={};
-      IMGS=imgs;
+      IMGS=imgs; ///Who doesn't love All CAPS?
       
       var lazyload = true;
       // lazy loading will work like this:
@@ -19,76 +18,62 @@ $( document ).bind('pageinit', function(){
       //    initially, no images are loaded.
       //    whenever the 
       
-      //var lazyLoad=[];
-
+	  //Do we have an image in focus?
       var curImg=false;
 
       var win=[];
       
       window.onresize=function(){
-
          win[0] = window.innerWidth;
          win[1] = window.innerHeight;
-         
-         if(window.doLayout)
-            doLayout();
-         // reload the image??
+         if(window.doLayout)  //If we know how to reload the image
+            doLayout();// reload the image??
       }
+       window.onresize();
+     
       
-      window.onresize();
-      
-      //Scrapedirectoryectory
+      //Scrape Function Defined in Previous JS File
       doScrape(directory,function(files){
-
-        //console.log(files);
-
-        var prev=false;
-
+        
+		var prev=false;
+		
         for(var i in files){
-          var f=files[i];
+          var f = files[i];
 
-          if(f.type=='image2'){
-
-            f.prev=prev;
-            f.next=false;
-            imgs[f.name]=f;
-
-            f.path=directory+'/'+f.name; // an extra slash never hurt anyone...
-
-            f.img=document.createElement('img');
-
-            //f.img.src=f.path; // we might not want to do this quite yet...
-
-            f.thumb=document.createElement('img');
-
+          if(f.type =='image2'){
+            f.prev = prev; //Begin assembling the Linked List
+            f.next = false;
+            imgs[f.name] = f;
+			
             if(prev){
               imgs[prev].next=f.name;
             }
 
+            f.path=directory+'/'+f.name; // an extra slash never hurt anyone...
+            
+			f.img=document.createElement('img');
+            f.thumb=document.createElement('img');
+
             if(!prev){
                 loadImage(f); //preload the first image
             }
-
-            prev=f.name;        
+			
+            prev=f.name;  
+			
+			      
           }else if(f.type=='parent'){
              imgs['../']=f;
              f.name='../';
              f.type='folder';
              
           }else if(f.type=='folder'){
-              //console.log("folder was found");
               imgs[f.name] = f;
-              
-//              f.w=1;
-//              f.h=1;
-              
           }else{
-             ; //console.log(f.name,f.type)
+             console.log("Unknown File Listing: " + f.name + " - " + f.type)
           }
         }
 
-        
-                var files=[];
+        var files=[];
         for(var i in imgs){
             var f=imgs[i];
             if(f.type=='image2'){
@@ -100,8 +85,7 @@ $( document ).bind('pageinit', function(){
         // we get a nice error if files is empty
         
         postRequest('thumb.php','info='+files.join(','),function(info){
-            //console.log(info);
-            
+			
             for(var i in imgs){
                 var f=imgs[i];
                 var inf=info[decodeURIComponent(f.path)];
