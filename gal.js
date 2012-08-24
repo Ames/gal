@@ -159,8 +159,8 @@ $( document ).bind('pageinit', function(){
                           container.appendChild(folderLink);
               
               f.thumb=folderDiv;
-              //document.body.appendChild(folderLink);
-              continue;
+              f.thumb.fileInfo = f;
+              continue; //Go to next Image Candidate
           }
           
           //if(!f.thumb.src)
@@ -319,6 +319,7 @@ $( document ).bind('pageinit', function(){
       showImage=function(f){
         document.body.innerHTML=""; //crude
 
+        window.curPath = f.path;
         loadImage(f); //load this image...
         if(f.next) loadImage(imgs[f.next]); // and the next
         if(f.prev) loadImage(imgs[f.prev]); // and the previous
@@ -403,7 +404,11 @@ $( document ).bind('pageinit', function(){
           case 'U+001B': //esc
           case 27:
             window.location.hash='*';
-            break;  
+            break;
+          case 68:
+            if(curImg)
+              window.open(window.curPath);
+            break;
 /*
 
           console.log(e.keyIdentifier);
