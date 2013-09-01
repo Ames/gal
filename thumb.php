@@ -30,7 +30,7 @@ if(isset($_REQUEST['info'])){
         if($or==6 || $or==8){ $t=$w; $w=$h; $h=$t; }
 
 
-        $infos[$file]=array("w"=>$w,"h"=>$h/*,"exif"=>$exif*/);
+        $infos[$file]=array("w"=>$w,"h"=>$h,"exif"=>$exif);
     }
 
     header("Content-Type: application/json");

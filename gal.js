@@ -96,6 +96,7 @@ $( document ).bind('pageinit', function(){
                 }else{
                     f.w=inf.w;
                     f.h=inf.h;
+                    f.exif=inf.exif;
                 }
             }
 
