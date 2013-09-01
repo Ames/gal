@@ -369,7 +369,7 @@ $( document ).bind('pageinit', function(){
       }
 
       window.onkeydown=function(e){
-        console.log(e.keyIdentifier);
+        //console.log(e.keyIdentifier);
         switch(e.keyCode){
           case 'Left':
           case 'U+004B':
