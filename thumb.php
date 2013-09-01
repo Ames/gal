@@ -1,9 +1,10 @@
 <?php
 
-$info = $_REQUEST['info'];
 
 // info takes a list of images and reutrns info for each
-if($info){
+if(isset($_REQUEST['info'])){
+
+    $info = $_REQUEST['info'];
 
     set_time_limit(60);
 
