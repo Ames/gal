@@ -77,7 +77,7 @@ $( document ).bind('pageinit', function(){
         for(var i in imgs){
             var f=imgs[i];
             if(f.type=='image2'){
-                files.push(imgs[i].path);
+                files.push(imgs[i].path.replace(',','<COMMA>'));
             }
 
         }

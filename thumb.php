@@ -13,7 +13,8 @@ if(isset($_REQUEST['info'])){
     $infos=array();
 
     foreach($files as $file){
-        $exif = exif_read_data($file);
+        $file = str_replace("<COMMA>", ",", $file);
+        $exif = exif_read_data(stripslashes($file));
 
         $w=$exif['COMPUTED']['Width'];
         $h=$exif['COMPUTED']['Height'];
@@ -43,7 +44,7 @@ if(isset($_REQUEST['info'])){
 
     $width  = $_GET['w'];
     $height = $_GET['h'];
-    $file   = $_GET['f'];
+    $file   = stripslashes($_GET['f']);
 
     $i=loadImage($file);
 
@@ -61,7 +62,17 @@ if(isset($_REQUEST['info'])){
 
 function loadImage($url){
 
-    $i = new Imagick($url);
+    // special case for .ico
+    if(substr(strtolower($url), -4) === ".ico"){
+        $i = new Imagick();
+        $i->setFormat('ico');
+        $f = fopen($url, 'r');
+        $i->readImageFile($f);
+        fclose($f);
+        $i->flattenImages();
+    }else{
+        $i = new Imagick($url);
+    }
 
     switch($i->getImageOrientation()){
         case 6: // rotate 90 degrees CW
