@@ -1,17 +1,16 @@
 
 
-//Mobile jquery
+/**
+*This is the holder for all the javascript. It is bound at document load.
+*Provided by jQuery. Keep everything in here.
+*/
 $( document ).bind('pageinit', function(){
 
-    
-    //console.log("trying to init")
-
-      var directory= document.location.search.substring(1);  
-
-      //console.log(directory)
+	//Current Directory
+	  var directory= document.location.search.substring(1);  
 
       var imgs={};
-      IMGS=imgs;
+      IMGS=imgs; ///Who doesn't love All CAPS?
       
       var lazyload = true;
       // lazy loading will work like this:
@@ -19,76 +18,62 @@ $( document ).bind('pageinit', function(){
       //    initially, no images are loaded.
       //    whenever the 
       
-      //var lazyLoad=[];
-
+	  //Do we have an image in focus?
       var curImg=false;
 
       var win=[];
       
       window.onresize=function(){
-
          win[0] = window.innerWidth;
          win[1] = window.innerHeight;
-         
-         if(window.doLayout)
-            doLayout();
-         // reload the image??
+         if(window.doLayout)  //If we know how to reload the image
+            doLayout();// reload the image??
       }
+       window.onresize();
+     
       
-      window.onresize();
-      
-      //Scrapedirectoryectory
+      //Scrape Function Defined in Previous JS File
       doScrape(directory,function(files){
-
-        //console.log(files);
-
-        var prev=false;
-
+        
+		var prev=false;
+		
         for(var i in files){
-          var f=files[i];
+          var f = files[i];
 
-          if(f.type=='image2'){
-
-            f.prev=prev;
-            f.next=false;
-            imgs[f.name]=f;
-
-            f.path=directory+'/'+f.name; // an extra slash never hurt anyone...
-
-            f.img=document.createElement('img');
-
-            //f.img.src=f.path; // we might not want to do this quite yet...
-
-            f.thumb=document.createElement('img');
-
+          if(f.type =='image2'){
+            f.prev = prev; //Begin assembling the Linked List
+            f.next = false;
+            imgs[f.name] = f;
+			
             if(prev){
               imgs[prev].next=f.name;
             }
 
+            f.path=directory+'/'+f.name; // an extra slash never hurt anyone...
+            
+			f.img=document.createElement('img');
+            f.thumb=document.createElement('img');
+
             if(!prev){
                 loadImage(f); //preload the first image
             }
-
-            prev=f.name;        
+			
+            prev=f.name;  
+			
+			      
           }else if(f.type=='parent'){
              imgs['../']=f;
              f.name='../';
              f.type='folder';
              
           }else if(f.type=='folder'){
-              //console.log("folder was found");
               imgs[f.name] = f;
-              
-//              f.w=1;
-//              f.h=1;
-              
           }else{
-             ; //console.log(f.name,f.type)
+             console.log("Unknown File Listing: " + f.name + " - " + f.type)
           }
         }
 
-        
-                var files=[];
+        var files=[];
         for(var i in imgs){
             var f=imgs[i];
             if(f.type=='image2'){
@@ -100,8 +85,7 @@ $( document ).bind('pageinit', function(){
         // we get a nice error if files is empty
         
         postRequest('thumb.php','info='+files.join(','),function(info){
-            //console.log(info);
-            
+			
             for(var i in imgs){
                 var f=imgs[i];
                 var inf=info[decodeURIComponent(f.path)];
@@ -155,11 +139,12 @@ $( document ).bind('pageinit', function(){
               folderLink.href = location.search + f.name + "/#*";
               if(f.name=='../') folderLink.href=getParent()
               folderText.innerHTML = f.name;
-              container.appendChild(folderLink);
+
+                          container.appendChild(folderLink);
               
               f.thumb=folderDiv;
-              //document.body.appendChild(folderLink);
-              continue;
+              f.thumb.fileInfo = f;
+              continue; //Go to next Image Candidate
           }
           
           //if(!f.thumb.src)
@@ -180,8 +165,18 @@ $( document ).bind('pageinit', function(){
           a.href='#'+f.name;
           a.className='thumbHolder';
           //a.appendChild(f.img);
+          
           a.appendChild(f.thumb);
           
+                 //lets add some color
+              //
+              R = Math.floor(Math.random()*256)
+              G = Math.floor(Math.random()*256)
+              B = Math.floor(Math.random()*256)
+              var col = 'rgba(' + R + ',' + G  + ',' + B + ',0.1)';
+              a.style.background = col;
+           
+
           container.appendChild(a);
           
           //f.thumb.style.opacity=0;
@@ -189,8 +184,10 @@ $( document ).bind('pageinit', function(){
           (function(th){
               th.onload = function(){
                  th.style.opacity=1;
+                 th.parentNode.style.background = "transparent"
               };
           })(f.thumb);
+
           
            //document.body.appendChild(a);
            
@@ -243,7 +240,8 @@ $( document ).bind('pageinit', function(){
                 
                 g.thumbW=w;
                 g.thumbH=h;
-                
+
+               
                 //g.thumb.src='thumb.php?w='+w+'&h='+h+'&f='+g.path;
             }
         }
@@ -283,6 +281,7 @@ $( document ).bind('pageinit', function(){
 
       window.onhashchange=function(){
         var name=window.location.hash.substring(1);
+        //r
         //handle none;
         //console.log("Hash changed to: "+ name);
         if(name=='*'){
@@ -304,6 +303,7 @@ $( document ).bind('pageinit', function(){
       showImage=function(f){
         document.body.innerHTML=""; //crude
 
+        window.curPath = f.path;
         loadImage(f); //load this image...
         if(f.next) loadImage(imgs[f.next]); // and the next
         if(f.prev) loadImage(imgs[f.prev]); // and the previous
@@ -369,7 +369,33 @@ $( document ).bind('pageinit', function(){
       }
 
       window.onkeydown=function(e){
-        //console.log(e);
+        console.log(e.keyIdentifier);
+        switch(e.keyCode){
+          case 'Left':
+          case 'U+004B':
+          case 37:
+            if(curImg)
+              if(curImg.prev)
+                window.location.hash=curImg.prev;
+            break;
+          case 'Right':
+          case 'U+004A':
+          case 39:
+            if(curImg)
+              if(curImg.next)
+                window.location.hash=curImg.next;
+            break;
+          case 'U+001B': //esc
+          case 27:
+            window.location.hash='*';
+            break;
+          case 68:
+            if(curImg)
+              window.open(window.curPath);
+            break;
+/*
+
+          console.log(e.keyIdentifier);
         switch(e.keyIdentifier){
           case 'Left':
           case 'U+004B':
@@ -386,7 +412,7 @@ $( document ).bind('pageinit', function(){
           case 'U+001B': //esc
             window.location.hash='*';
             break;  
-
+*/
         }
       }
 
