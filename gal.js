@@ -7,7 +7,7 @@
 $( document ).bind('pageinit', function(){
 
 	//Current Directory
-	  var directory= document.location.search.substring(1);
+    var directory=decodeURIComponent(document.location.search.substring(1));
 
       var imgs={};
       IMGS=imgs; ///Who doesn't love All CAPS?
