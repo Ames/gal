@@ -7,22 +7,22 @@
 $( document ).bind('pageinit', function(){
 
 	//Current Directory
-	  var directory= document.location.search.substring(1);  
+	  var directory= document.location.search.substring(1);
 
       var imgs={};
       IMGS=imgs; ///Who doesn't love All CAPS?
-      
+
       var lazyload = true;
       // lazy loading will work like this:
       //    the function shouldLoadThumb(img) returns true if img is near view
       //    initially, no images are loaded.
-      //    whenever the 
-      
+      //    whenever the
+
 	  //Do we have an image in focus?
       var curImg=false;
 
       var win=[];
-      
+
       window.onresize=function(){
          win[0] = window.innerWidth;
          win[1] = window.innerHeight;
@@ -30,13 +30,13 @@ $( document ).bind('pageinit', function(){
             doLayout();// reload the image??
       }
        window.onresize();
-     
-      
+
+
       //Scrape Function Defined in Previous JS File
       doScrape(directory,function(files){
-        
+
 		var prev=false;
-		
+
         for(var i in files){
           var f = files[i];
 
@@ -44,28 +44,28 @@ $( document ).bind('pageinit', function(){
             f.prev = prev; //Begin assembling the Linked List
             f.next = false;
             imgs[f.name] = f;
-			
+
             if(prev){
               imgs[prev].next=f.name;
             }
 
             f.path=directory+'/'+f.name; // an extra slash never hurt anyone...
-            
+
 			f.img=document.createElement('img');
             f.thumb=document.createElement('img');
 
             if(!prev){
                 loadImage(f); //preload the first image
             }
-			
-            prev=f.name;  
-			
-			      
+
+            prev=f.name;
+
+
           }else if(f.type=='parent'){
              imgs['../']=f;
              f.name='../';
              f.type='folder';
-             
+
           }else if(f.type=='folder'){
               imgs[f.name] = f;
           }else{
@@ -81,11 +81,11 @@ $( document ).bind('pageinit', function(){
             }
 
         }
-        
+
         // we get a nice error if files is empty
-        
+
         postRequest('thumb.php','info='+files.join(','),function(info){
-			
+
             for(var i in imgs){
                 var f=imgs[i];
                 var inf=info[decodeURIComponent(f.path)];
@@ -98,8 +98,8 @@ $( document ).bind('pageinit', function(){
                     f.h=inf.h;
                 }
             }
-            
-            
+
+
             window.onhashchange();
         });
 
@@ -108,8 +108,8 @@ $( document ).bind('pageinit', function(){
 
       window.showThumbs=function(){
 
-        
-         
+
+
         document.body.innerHTML="";
 
         var container = document.createElement('div');
@@ -141,20 +141,20 @@ $( document ).bind('pageinit', function(){
               folderText.innerHTML = f.name;
 
                           container.appendChild(folderLink);
-              
+
               f.thumb=folderDiv;
               f.thumb.fileInfo = f;
               continue; //Go to next Image Candidate
           }
-          
+
           //if(!f.thumb.src)
             //f.thumb.src='thumb.php?perim=400&f='+f.path;
 
           //console.log(f.thumb)
           //f.img.className='thumb';
           f.thumb.className='thumb';
-          
-          
+
+
           f.thumb.onload = function(){
              //f.thumb.style.display='block';
              //window.wall.reload()
@@ -165,9 +165,9 @@ $( document ).bind('pageinit', function(){
           a.href='#'+f.name;
           a.className='thumbHolder';
           //a.appendChild(f.img);
-          
+
           a.appendChild(f.thumb);
-          
+
                  //lets add some color
               //
               R = Math.floor(Math.random()*256)
@@ -175,12 +175,12 @@ $( document ).bind('pageinit', function(){
               B = Math.floor(Math.random()*256)
               var col = 'rgba(' + R + ',' + G  + ',' + B + ',0.1)';
               a.style.background = col;
-           
+
 
           container.appendChild(a);
-          
+
           //f.thumb.style.opacity=0;
-          
+
           (function(th){
               th.onload = function(){
                  th.style.opacity=1;
@@ -188,80 +188,80 @@ $( document ).bind('pageinit', function(){
               };
           })(f.thumb);
 
-          
+
            //document.body.appendChild(a);
-           
+
           //txt+='<a href="#'+f.name+'"><img src="'+f.path+'" class="thumb"></a>';
         }
-        
-        
+
+
         doLayout();
-        
+
 
         //document.body.innerHTML=txt;
 
         //wall.reload();
       }
-      
-      
+
+
       doLayout=function(){
-        
+
         //k, now lay out the images
-        
+
         // this is where we'd start if we wanted to re-layout, e.g. after resize
-        
-        
+
+
         // we're doing it justified. flickr style.
-        
+
         // the idea is:
         //   with a fixed height, add images to a row.
         //   once the row is past a certain threshold,
         //     resize the row vertically so that it fits horizontally.
-        
+
         var targetRatio=win[0]/250;
         var margin=4;
-        
+
         var rowMax=win[0]/targetRatio;
-        
-        
+
+
         var addRow=function(row,rowTotal){
             var rowHeight=(win[0]-(row.length+1)*margin)/rowTotal;
             if(rowHeight>rowMax)rowHeight=rowMax;
-            
+
             //console.log(row,rowTotal,rowHeight);
-            
+
             for(var j in row){
                 var g=row[j];
                 var w=Math.round(rowHeight/g.h*g.w-margin);
                 var h=Math.round(rowHeight-margin);
-                
+
                 g.thumb.style.width=w+'px';
                 g.thumb.style.height=h+'px';
-                
+
                 g.thumbW=w;
                 g.thumbH=h;
 
-               
+
                 //g.thumb.src='thumb.php?w='+w+'&h='+h+'&f='+g.path;
             }
         }
-        
-        
+
+
         var curRow,curRowTotal;
-        
+
         for(var i in imgs){
             var f=imgs[i];
-            
+
             if(!curRow){
                 curRowTotal=0;
                 curRow=[];
             }
-            
+
             curRow.push(f);
             curRowTotal+=f.w/f.h;
-            
+
             //console.log(f.w/f.h);
-            
+
             if(curRowTotal>=targetRatio){
                 addRow(curRow,curRowTotal);
                 curRow=false;
@@ -270,14 +270,14 @@ $( document ).bind('pageinit', function(){
         if(curRow)
             addRow(curRow,curRowTotal); //this might get awkward...
 
-        
+
         doLazyLoad();
 
-        //console.log(imgs); 
-        
+        //console.log(imgs);
+
       }
-      
-      
+
+
 
       window.onhashchange=function(){
         var name=window.location.hash.substring(1);
@@ -293,12 +293,12 @@ $( document ).bind('pageinit', function(){
             console.log(imgs);
         }else{
           window.location.hash='*';
-        }    
+        }
       }
 
       getParent=function(){
           var current = location.search;
-          return current.split("/").slice(0,-2).join("/")+'/#*' 
+          return current.split("/").slice(0,-2).join("/")+'/#*'
       }
       showImage=function(f){
         document.body.innerHTML=""; //crude
@@ -342,30 +342,30 @@ $( document ).bind('pageinit', function(){
         }
 
       }
-      
+
       // returns true if a thumb should be loaded
       shouldLoadThumb=function(img){
-         
+
          if(!img.thumb) return false;
-         
+
          if(!lazyload) return true; //show everything
-         
+
          var preloadMargin=win[1]*1.5; // how far out of view an image needs to be to load it
-         
+
          // we want to load an image if any of it is visible, or perhaps almost visible...
          var winTop=document.body.scrollTop;
          var imgTop=img.thumb.offsetTop;
          var winH=win[1];
          var imgH=img.thumbH;
-         
+
          return imgTop + imgH + preloadMargin > winTop
              && imgTop - preloadMargin < winTop + winH;
-        
+
       }
-      
+
       window.onscroll=function(){
         doLazyLoad();
-        
+
       }
 
       window.onkeydown=function(e){
@@ -411,12 +411,12 @@ $( document ).bind('pageinit', function(){
             break;
           case 'U+001B': //esc
             window.location.hash='*';
-            break;  
+            break;
 */
         }
       }
 
-      
+
       $( window ).swiperight(function() {
           if(curImg){
             if(curImg.prev){
@@ -434,7 +434,7 @@ $( document ).bind('pageinit', function(){
               window.location.hash='*';
       })
 
-      
+
 });
 
 // makes an ajax request, calls cb with parsed json or empty for error
