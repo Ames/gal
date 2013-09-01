@@ -70,6 +70,10 @@ function loadImage($url){
         case 8: // rotate 90 degrees CCW
             $i->rotateimage("#FFF", -90);
             break;
+
+        case 3: // upside-down
+            $i->rotateimage("#FFF", 180);
+            break;
     }
     return $i;
 }
