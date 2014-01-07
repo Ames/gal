@@ -12,9 +12,15 @@ if(isset($_REQUEST['info'])){
     $files=explode(',',$info);
     $infos=array();
 
+    //print($files);
+
     foreach($files as $file){
+
+        if(!$file)
+            continue;
+
         $file = str_replace("<COMMA>", ",", $file);
-        $exif = exif_read_data(stripslashes($file));
+        $exif = @exif_read_data(stripslashes($file));
 
         $w=$exif['COMPUTED']['Width'];
         $h=$exif['COMPUTED']['Height'];
